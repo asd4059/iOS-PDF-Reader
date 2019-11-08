@@ -55,7 +55,7 @@ internal final class PDFThumbnailCollectionViewController: UICollectionViewContr
     }
 
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return pageImages?.count ?? 0
+        pageImages?.count ?? 0
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -68,7 +68,7 @@ internal final class PDFThumbnailCollectionViewController: UICollectionViewContr
     }
     
     @objc func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: IndexPath) -> CGSize {
-        return PDFThumbnailCell.cellSize
+        PDFThumbnailCell.cellSize
     }
     
     override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {

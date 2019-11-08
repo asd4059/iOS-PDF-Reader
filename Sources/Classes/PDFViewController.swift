@@ -95,6 +95,9 @@ public final class PDFViewController: UIViewController {
     
     /// Backbutton used to override the default back button
     private var backButton: UIBarButtonItem?
+
+    public var hideStatusBarOnStart: Bool = false
+    public var hideToolbarsByTap: Bool = true
     
     /// Background color to apply to the collectionView.
     public var backgroundColor: UIColor? = .lightGray {
@@ -144,7 +147,7 @@ public final class PDFViewController: UIViewController {
         let numberOfPages = CGFloat(document.pageCount)
         let cellSpacing = CGFloat(2.0)
         let totalSpacing = (numberOfPages - 1.0) * cellSpacing
-        let thumbnailWidth = (numberOfPages * PDFThumbnailCell.cellSize.width) + totalSpacing
+        let thumbnailWidth = numberOfPages * PDFThumbnailCell.cellSize.width + totalSpacing
         let width = min(thumbnailWidth, view.bounds.width)
         thumbnailCollectionControllerWidth.constant = width
     }
@@ -155,15 +158,15 @@ public final class PDFViewController: UIViewController {
     }
     
     override public var prefersStatusBarHidden: Bool {
-        return navigationController?.isNavigationBarHidden == true
+        self.hideStatusBarOnStart
     }
     
     override public var preferredStatusBarUpdateAnimation: UIStatusBarAnimation {
-        return .slide
+        .slide
     }
     
     public override func shouldPerformSegue(withIdentifier identifier: String, sender: Any?) -> Bool {
-        return isThumbnailsEnabled
+        isThumbnailsEnabled
     }
     
     override public func prepare(for segue: UIStoryboardSegue, sender: Any?) {
@@ -233,7 +236,7 @@ extension PDFViewController: PDFThumbnailControllerDelegate {
 
 extension PDFViewController: UICollectionViewDataSource {
     public func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return document.pageCount
+        document.pageCount
     }
     
     public func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -252,22 +255,24 @@ extension PDFViewController: PDFPageCollectionViewCellDelegate {
     }
     
     func handleSingleTap(_ cell: PDFPageCollectionViewCell, pdfPageView: PDFPageView) {
-        var shouldHide: Bool {
-            guard let isNavigationBarHidden = navigationController?.isNavigationBarHidden else {
-                return false
+        if hideToolbarsByTap {
+            var shouldHide: Bool {
+                guard let isNavigationBarHidden = navigationController?.isNavigationBarHidden else {
+                    return false
+                }
+                return !isNavigationBarHidden
             }
-            return !isNavigationBarHidden
-        }
-        UIView.animate(withDuration: 0.25) {
-            self.hideThumbnailController(shouldHide)
-            self.navigationController?.setNavigationBarHidden(shouldHide, animated: true)
+            UIView.animate(withDuration: 0.25) {
+                self.hideThumbnailController(shouldHide)
+                self.navigationController?.setNavigationBarHidden(shouldHide, animated: true)
+            }
         }
     }
 }
 
 extension PDFViewController: UICollectionViewDelegateFlowLayout {
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width - 1, height: collectionView.frame.height)
+        CGSize(width: collectionView.frame.width - 1, height: collectionView.frame.height)
     }
 }
 

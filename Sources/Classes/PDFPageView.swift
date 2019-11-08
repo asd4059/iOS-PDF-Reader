@@ -78,7 +78,7 @@ internal final class PDFPageView: UIScrollView {
         var zoomScale = zoomScaleThatFits(targetRect.size, source: bounds.size)
         
         minimumZoomScale = zoomScale // Set the minimum and maximum zoom scales
-        maximumZoomScale = zoomScale * (zoomLevels * zoomLevels) // Max number of zoom levels
+        maximumZoomScale = zoomScale * zoomLevels * zoomLevels // Max number of zoom levels
         zoomAmount = (maximumZoomScale - minimumZoomScale) / zoomLevels
         
         scale = 1
@@ -183,8 +183,8 @@ internal final class PDFPageView: UIScrollView {
         // Normalize current content size back to content scale of 1.0f
         let updatedContentSize = CGSize(width: contentSize.width/zoomScale, height: contentSize.height/zoomScale)
     
-        let translatedZoomPoint = CGPoint(x: (zoomPoint.x / bounds.width) * updatedContentSize.width,
-                                          y: (zoomPoint.y / bounds.height) * updatedContentSize.height)
+        let translatedZoomPoint = CGPoint(x: zoomPoint.x / bounds.width * updatedContentSize.width,
+                                          y: zoomPoint.y / bounds.height * updatedContentSize.height)
     
         // derive the size of the region to zoom to
         let zoomSize = CGSize(width: bounds.width / scale, height: bounds.height / scale)
@@ -201,7 +201,7 @@ extension PDFPageView: UIScrollViewDelegate {
     /// A UIScrollView delegate callback, called when the user starts zooming.
     /// Return the content view
     func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        return contentView
+        contentView
     }
     
     /// A UIScrollView delegate callback, called when the user stops zooming.

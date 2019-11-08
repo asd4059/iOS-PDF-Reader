@@ -10,12 +10,12 @@ import UIKit
 import QuartzCore
 
 extension Int {
-    var degreesToRadians: Double { return Double(self) * .pi / 180 }
+    var degreesToRadians: Double { Double(self) * .pi / 180 }
 }
 
 extension FloatingPoint {
-    var degreesToRadians: Self { return self * .pi / 180 }
-    var radiansToDegrees: Self { return self * 180 / .pi }
+    var degreesToRadians: Self { self * .pi / 180 }
+    var radiansToDegrees: Self { self * 180 / .pi }
 }
 
 /// Tiled representation of a portion of a rendered pdf page
@@ -51,7 +51,7 @@ internal final class TiledView: UIView {
     }
     
     override class var layerClass : AnyClass {
-        return CATiledLayer.self
+        CATiledLayer.self
     }
     
     // Draw the CGPDFPage into the layer at the correct scale.
