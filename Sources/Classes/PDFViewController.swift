@@ -191,7 +191,7 @@ public final class PDFViewController: UIViewController {
     }
     
     /// Takes an appropriate action based on the current action style
-    @objc func actionButtonPressed() {
+    @objc public func actionButtonPressed() {
         switch actionStyle {
         case .print:
             print()
