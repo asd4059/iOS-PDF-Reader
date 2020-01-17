@@ -18,7 +18,7 @@ public struct PDFDocument {
     public let fileName: String
     
     /// File url where this document resides
-    let fileURL: URL?
+    public let fileURL: URL?
     
     /// File data of the document
     let fileData: Data
