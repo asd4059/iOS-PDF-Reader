@@ -21,7 +21,7 @@ public struct PDFDocument {
     public let fileURL: URL?
     
     /// File data of the document
-    let fileData: Data
+    public let fileData: Data
     
     /// Core Graphics representation of the document
     let coreDocument: CGPDFDocument
